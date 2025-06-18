@@ -1,5 +1,8 @@
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { 
+    useEffect, 
+    useState 
+} from "react";
 import { 
     LogOut,
     Menu, 
@@ -80,7 +83,7 @@ export function Header() {
 
                         <li className='ml-10 text-sm font-bold hover:border-b'>
                             <Link 
-                                href='/create-feed'
+                                href='/html-to-rss/create-feed'
                             >
                                 Create Feed
                             </Link>
@@ -88,7 +91,7 @@ export function Header() {
 
                         <li className='ml-10 text-sm font-bold hover:border-b'>
                             <Link 
-                                href='/rss-playground'
+                                href='/rss-playground/create'
                             >
                                 RSS Playground
                             </Link>
@@ -196,7 +199,7 @@ export function Header() {
                         </Link>
 
                         <Link 
-                            href='/create-feed'
+                            href='/html-to-rss/create-feed'
                         >
                             <li 
                                 onClick={() => setNav(false)} 
@@ -207,7 +210,7 @@ export function Header() {
                         </Link>
 
                         <Link 
-                            href='/rss-playground'
+                            href='/rss-playground/create'
                         >
                             <li 
                                 onClick={() => setNav(false)} 

@@ -15,7 +15,7 @@ export default function RSLayout({
   return (
     <div className="mx-auto w-full">
             <Header />
-            <div className="px-4 py-2">
+            <div className="pt-[70px] px-4 py-2">
                 {children}
             </div>
     </div>
