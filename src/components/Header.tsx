@@ -52,9 +52,9 @@ export function Header() {
                         href='/home'
                     >
                         <Image
-                            src="/images/mwfeeds-logo.svg"
+                            src="/images/mwfeeds-logo-login.svg"
                             alt='logo'
-                            width='45'
+                            width='70'
                             height='45'
                             className='cursor-pointer rounded-full'
                         />   
@@ -150,7 +150,7 @@ export function Header() {
                                     href='/home'
                                 >
                                     <Image
-                                        src="/images/mwfeeds-logo.svg"
+                                        src="/images/mwfeeds-logo-login.svg"
                                         alt="mwfeeds logo"
                                         width='90'
                                         height='90'

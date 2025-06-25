@@ -20,7 +20,7 @@ export default function LoginPage() {
 
     return (
         <div className="flex justify-center items-center w-full">
-            <Card className="w-full max-w-[900px] min-w-[450px] border-0 rounded-sm sm:border-2 border-black mt-20">
+            <Card className="w-full max-w-[900px] min-w-[450px] border-0 rounded-sm sm:border-2 border-black mt-20 bg-gradient-to-r from-red-500 to-orange-500">
                 
                 <div className="flex flex-col md:flex-row w-full">
                     
@@ -30,6 +30,7 @@ export default function LoginPage() {
                             alt="Login" 
                             width='500'
                             height='200'
+                            className=""
                         />
                     </div>
                     
