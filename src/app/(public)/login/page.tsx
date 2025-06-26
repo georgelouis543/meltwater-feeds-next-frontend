@@ -10,8 +10,9 @@ import Image from "next/image";
 
 export default function LoginPage() {
     const CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!
+    
     function handleLogin(credentialResponse: CredentialResponse): void {
-        throw new Error("Function not implemented.");
+        console.log(credentialResponse.credential)
     }
 
     function handleFailure(): void {
@@ -24,6 +25,7 @@ export default function LoginPage() {
                 
                 <div className="flex flex-col md:flex-row w-full">
                     
+                    {/* Image goes left */}
                     <div className="w-full md:w-[500px] flex items-center justify-center md:border-r-4 md:border-black">
                         <Image 
                             src="/images/mwfeeds-logo-login.svg" 
@@ -33,7 +35,8 @@ export default function LoginPage() {
                             className=""
                         />
                     </div>
-                    
+
+                    {/* Google SSO Button to the Right*/}
                     <div className="w-full md:w-[400px] flex flex-col items-top justify-center p-4">
                         <CardTitle className="text-xl text-center md:border-b-2 md:border-black pb-2">
                             Continue with your meltwater account

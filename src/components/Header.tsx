@@ -9,8 +9,11 @@ import {
     X 
 } from 'lucide-react';
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 export function Header() {
+
+    const pathname = usePathname();
 
     const [nav, setNav] = useState(false);
     const [shadow, setShadow] = useState(false);
@@ -73,7 +76,14 @@ export function Header() {
                         className='hidden md:flex'
                     >
                         
-                        <li className='ml-10 text-sm font-bold hover:border-b'>
+                        <li 
+                            className={`ml-7 text-sm px-2 py-2 rounded ${ 
+                                pathname === "/home"
+                                ? "bg-gradient-to-r from-red-500 to-orange-500 text-white"
+                                : "hover:border-b"
+                                }`
+                            }
+                        >
                             <Link 
                                 href='/home'
                             >
@@ -81,7 +91,14 @@ export function Header() {
                             </Link>
                         </li>
 
-                        <li className='ml-10 text-sm font-bold hover:border-b'>
+                        <li 
+                            className={`ml-7 text-sm px-2 py-2 rounded ${ 
+                                pathname.startsWith("/html-to-rss")
+                                ? "bg-gradient-to-r from-red-500 to-orange-500 text-white"
+                                : "hover:border-b"
+                                }`
+                            }
+                        >
                             <Link 
                                 href='/html-to-rss/create-feed'
                             >
@@ -89,7 +106,14 @@ export function Header() {
                             </Link>
                         </li>
 
-                        <li className='ml-10 text-sm font-bold hover:border-b'>
+                        <li
+                            className={`ml-7 text-sm px-2 py-2 rounded ${ 
+                                pathname.startsWith("/rss-playground")
+                                ? "bg-gradient-to-r from-red-500 to-orange-500 text-white"
+                                : "hover:border-b"
+                                }`
+                            }
+                        >
                             <Link 
                                 href='/rss-playground/create'
                             >
@@ -97,9 +121,28 @@ export function Header() {
                             </Link>
                         </li>
 
-                        <li className='relative group ml- text-md font-bold ml-10'>
+                        {/* <li
+                            className={`ml-10 text-sm px-2 py-2 rounded ${ 
+                                pathname.startsWith("/admin")
+                                ? "bg-gradient-to-r from-red-500 to-orange-500 text-white"
+                                : "hover:border-b"
+                                }`
+                            }
+                        >
+                            <Link 
+                                href='/rss-playground/create'
+                            >
+                                Admin
+                            </Link>
+                        </li> */}
+
+                        <li 
+                            className="relative group ml-7 text-md p-2 rounded-full 
+                                hover:bg-gradient-to-r hover:from-red-500 hover:to-orange-500 
+                                hover:text-white transition-colors duration-300 cursor-pointer"
+                        >
                             <LogOut 
-                                size={20} 
+                                size={20}
                             />
                         </li>
 
