@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import useAuth from "@/hooks/useAuth";
 
 export function Header() {
 
@@ -19,6 +20,13 @@ export function Header() {
     const [shadow, setShadow] = useState(false);
     const [navBg] = useState('#ffffff');
     const [linkColor] = useState('#1f2937');
+
+    const { auth } = useAuth()
+    const [isAdmin, setIsAdmin] = useState(false)
+
+    useEffect(() => {
+        setIsAdmin(auth.user_role === "admin");
+    }, [auth.user_email]);
 
     const handleNav = () => {
         setNav(!nav);
@@ -63,7 +71,7 @@ export function Header() {
                         />   
                     </Link>
 
-                    <h1 className='ml-4 text-2xl font-bold text-black'>
+                    <h1 className='ml-4 text-xl font-bold text-black'>
                         meltwater feeds
                     </h1>  
 
@@ -121,20 +129,23 @@ export function Header() {
                             </Link>
                         </li>
 
-                        {/* <li
-                            className={`ml-10 text-sm px-2 py-2 rounded ${ 
-                                pathname.startsWith("/admin")
-                                ? "bg-gradient-to-r from-red-500 to-orange-500 text-white"
-                                : "hover:border-b"
-                                }`
-                            }
-                        >
-                            <Link 
-                                href='/rss-playground/create'
-                            >
-                                Admin
-                            </Link>
-                        </li> */}
+                        {   isAdmin && (
+                                <li
+                                    className={`ml-7 text-sm px-2 py-2 rounded ${ 
+                                        pathname.startsWith("/admin")
+                                        ? "bg-gradient-to-r from-red-500 to-orange-500 text-white"
+                                        : "hover:border-b"
+                                        }`
+                                    }
+                                >
+                                    <Link 
+                                        href='/admin/view-users'
+                                    >
+                                        Admin
+                                    </Link>
+                                </li>
+                            )
+                        }
 
                         <li 
                             className="relative group ml-7 text-md p-2 rounded-full 
@@ -201,7 +212,7 @@ export function Header() {
                                     />
                                 </Link>
                                 
-                                <h1 className='ml-4 text-2xl font-bold text-black'>
+                                <h1 className='ml-4 text-xl font-bold text-black'>
                                     meltwater feeds
                                 </h1>  
 
@@ -262,6 +273,20 @@ export function Header() {
                                 RSS PLAYGROUND
                             </li>
                         </Link>
+
+                       { isAdmin && (
+                            <Link 
+                                href='/admin/view-users'
+                            >
+                                <li 
+                                    onClick={() => setNav(false)} 
+                                    className='py-4 text-sm font-bold'
+                                >
+                                    ADMIN
+                                </li>
+                            </Link>
+                            )
+                        }
 
                     </ul>
         

@@ -1,14 +1,19 @@
 'use client'
 
 import useAuth from "@/hooks/useAuth";
+import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { ReactNode, useEffect } from "react";
 
-const RequireAuth = ({ 
+type RequireAuthProps = {
+  allowedRoles: string[]
+  children: ReactNode
+}
+
+const RequireAuth = ({
+    allowedRoles, 
     children 
-}: { 
-    children: React.ReactNode
-}) => {
+}: RequireAuthProps) => {
     const { auth } = useAuth();
     const router = useRouter();
     const pathname = usePathname();
@@ -23,10 +28,22 @@ const RequireAuth = ({
       return null; // Prevent rendering while redirecting
     }
   
-    return (
+    return auth.user_role && allowedRoles.includes(auth.user_role) ? (
         <>
-            {children}
+          {children}
         </>
+    ) : (
+        <div className="flex flex-col items-center justify-center w-full h-screen text-center px-2">
+            <h2 className="text-3xl font-bold mb-4 text-black">
+                Uh-oh! 🚫 You&apos;re not supposed to be here
+            </h2>
+            <Link
+                href="/login"
+                className="underline text-red-600"
+            >
+                Try logging in with the right account.
+            </Link>
+        </div>
     )
 };
   

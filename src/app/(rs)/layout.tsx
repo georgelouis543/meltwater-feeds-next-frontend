@@ -1,6 +1,7 @@
 'use client'
 
 import { Header } from "@/components/Header"
+import { ROLES } from "@/config/roles"
 import PersistLogin from "@/features/auth/PersistLogin"
 import RequireAuth from "@/features/auth/RequireAuth"
 import useMounted from "@/hooks/useMounted"
@@ -16,14 +17,19 @@ export default function RSLayout({
 
   return (
     <PersistLogin>
-      <RequireAuth>
+      <RequireAuth 
+        allowedRoles={[
+          ROLES.admin, 
+          ROLES.user
+        ]}
+      >
         <div className="mx-auto w-full">
                 <Header />
                 <div className="pt-[70px] px-4 py-2">
                     {children}
                 </div>
         </div>
-    </RequireAuth>
+      </RequireAuth>
     </PersistLogin>
   )
 }
