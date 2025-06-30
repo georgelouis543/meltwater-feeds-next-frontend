@@ -26,7 +26,7 @@ export function Header() {
 
     useEffect(() => {
         setIsAdmin(auth.user_role === "admin");
-    }, [auth.user_email]);
+    }, [auth.user_role]);
 
     const handleNav = () => {
         setNav(!nav);
@@ -87,7 +87,7 @@ export function Header() {
                         <li 
                             className={`ml-7 text-sm px-2 py-2 rounded ${ 
                                 pathname === "/home"
-                                ? "bg-gradient-to-r from-red-500 to-orange-500 text-white"
+                                ? "bg-gradient-to-r from-red-500 to-orange-500 text-white hover:ease-in-out hover:duration-200"
                                 : "hover:border-b"
                                 }`
                             }
@@ -102,7 +102,7 @@ export function Header() {
                         <li 
                             className={`ml-7 text-sm px-2 py-2 rounded ${ 
                                 pathname.startsWith("/html-to-rss")
-                                ? "bg-gradient-to-r from-red-500 to-orange-500 text-white"
+                                ? "bg-gradient-to-r from-red-500 to-orange-500 text-white hover:ease-in-out hover:duration-200"
                                 : "hover:border-b"
                                 }`
                             }
@@ -117,7 +117,7 @@ export function Header() {
                         <li
                             className={`ml-7 text-sm px-2 py-2 rounded ${ 
                                 pathname.startsWith("/rss-playground")
-                                ? "bg-gradient-to-r from-red-500 to-orange-500 text-white"
+                                ? "bg-gradient-to-r from-red-500 to-orange-500 text-white hover:ease-in-out hover:duration-200"
                                 : "hover:border-b"
                                 }`
                             }
@@ -133,7 +133,7 @@ export function Header() {
                                 <li
                                     className={`ml-7 text-sm px-2 py-2 rounded ${ 
                                         pathname.startsWith("/admin")
-                                        ? "bg-gradient-to-r from-red-500 to-orange-500 text-white"
+                                        ? "bg-gradient-to-r from-red-500 to-orange-500 text-white hover:ease-in-out hover:duration-200"
                                         : "hover:border-b"
                                         }`
                                     }
@@ -274,17 +274,18 @@ export function Header() {
                             </li>
                         </Link>
 
-                       { isAdmin && (
-                            <Link 
-                                href='/admin/view-users'
-                            >
-                                <li 
-                                    onClick={() => setNav(false)} 
-                                    className='py-4 text-sm font-bold'
+                       { 
+                            isAdmin && (
+                                <Link 
+                                    href='/admin/view-users'
                                 >
-                                    ADMIN
-                                </li>
-                            </Link>
+                                    <li 
+                                        onClick={() => setNav(false)} 
+                                        className='py-4 text-sm font-bold'
+                                    >
+                                        ADMIN
+                                    </li>
+                                </Link>
                             )
                         }
 

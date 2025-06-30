@@ -25,7 +25,20 @@ export default function RSLayout({
       >
         <div className="mx-auto w-full">
                 <Header />
-                <div className="pt-[70px] px-4 py-2">
+                <div 
+                  className="
+                    flex 
+                    flex-col
+                    md:flex-row
+                    justify-between 
+                    items-center 
+                    w-full 
+                    h-full 
+                    px-2 
+                    2xl:px-16
+                    pt-[80px]
+                    "
+                >
                     {children}
                 </div>
         </div>
