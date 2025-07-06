@@ -12,6 +12,11 @@ const PersistLogin = ({
     children 
 }: Props) => {
     const [isLoading, setIsLoading] = useState(true);
+    const [
+      hasTriedRefreshing, 
+      setHasTriedRefreshing
+    ] = useState(false); // using this state to avoid verifyRefreshToken to run infinitely if in case refresh token is cleared
+    
     const refresh = useRefreshToken();
     const { auth, setAuth } = useAuth();
   
@@ -25,11 +30,14 @@ const PersistLogin = ({
             setAuth({})
             console.error(err);
         } finally {
-            if (isMounted) setIsLoading(false);
+            if (isMounted) {
+              setIsLoading(false);
+              setHasTriedRefreshing(true)
+            }
         }
       };
   
-      if (!auth?.access_token) {
+      if (!auth?.access_token && !hasTriedRefreshing) {
         verifyRefreshToken();
       } else {
         setIsLoading(false);
@@ -38,12 +46,17 @@ const PersistLogin = ({
       return () => {
         isMounted = false;
       };
-    }, []);
+    }, [
+      auth?.access_token,
+      refresh,
+      hasTriedRefreshing,
+      setAuth
+    ]);
   
     useEffect(() => {
       console.log(`isLoading: ${isLoading}`);
       console.log(`access token: ${JSON.stringify(auth?.access_token)}`);
-    }, [isLoading]);
+    }, [isLoading, auth?.access_token]);
   
     return (
       <>

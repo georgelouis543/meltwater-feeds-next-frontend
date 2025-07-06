@@ -1,7 +1,15 @@
 'use client'
 
 import FeedsTable from "@/components/home/FeedsTable";
-import { Pagination, PaginationContent, PaginationItem, PaginationPrevious, PaginationLink, PaginationEllipsis, PaginationNext } from "@/components/ui/pagination";
+import { 
+  Pagination, 
+  PaginationContent, 
+  PaginationItem, 
+  PaginationPrevious, 
+  PaginationLink, 
+  PaginationEllipsis, 
+  PaginationNext 
+} from "@/components/ui/pagination";
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 import { FeedData } from "@/types/feedData";
 import { useEffect, useState } from "react";
@@ -9,6 +17,8 @@ import { useEffect, useState } from "react";
   
 export default function HomePage() {
     const [feeds, setFeeds] = useState<FeedData[]>([])
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [isLoading, setIsLoading] = useState(true)
 
     const axiosPrivate = useAxiosPrivate()

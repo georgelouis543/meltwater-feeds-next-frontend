@@ -31,8 +31,8 @@ export default function CreateFeedPage() {
             console.log(typedResponse)
             setArticles(typedResponse) 
 
-        } catch(error) {
-            console.log("Error Fetching Preview")
+        } catch(error: unknown) {
+            console.log("Error Fetching Preview", error)
             toast.error(
                 "Something went wrong fetching the preview. Please try again later"
             )
