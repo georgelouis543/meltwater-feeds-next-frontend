@@ -2,13 +2,14 @@
 
 import ArticlesContainer from "@/components/article/ArticlesContainer"
 import CreateFeedForm, { formSchema } from "@/components/html-to-rss/create-feed-form"
-import { Button } from "@/components/ui/button"
+import ConfirmCreateFeedDialog from "@/components/html-to-rss/proceed-dialog"
 import useAxiosPrivate from "@/hooks/useAxiosPrivate"
 import { ArticlePreview } from "@/types/article"
 import { useState } from "react"
+import { toast } from "sonner"
 import { z } from "zod"
 
-type FormValues = z.infer<typeof formSchema>
+export type FormValues = z.infer<typeof formSchema>
 
 export default function CreateFeedPage() {
     const [formData, setFormData] = useState<FormValues | null>(null)
@@ -26,17 +27,21 @@ export default function CreateFeedPage() {
                 "/html-to-rss-convert/get-preview",
                 data
             )
-            console.log(response)
-            setArticles(response.data) 
+            const typedResponse = response.data as ArticlePreview[]
+            console.log(typedResponse)
+            setArticles(typedResponse) 
 
         } catch(error) {
             console.log("Error Fetching Preview")
+            toast.error(
+                "Something went wrong fetching the preview. Please try again later"
+            )
         } finally {
             setIsLoading(false)
         }
 
         
-      }
+    }
 
     const handleReset = () => {
         setArticles([])
@@ -90,14 +95,13 @@ export default function CreateFeedPage() {
                 </div>
 
                 <div className="w-full flex md:justify-end">
-                    <Button 
-                        className="p-3 mt-3 shadow-md rounded-sm"
+                    <ConfirmCreateFeedDialog 
+                        formData={formData}
                         disabled={
                             articles.length === 0
                         }
-                    >
-                        Proceed
-                    </Button>
+                    />
+                    
                 </div>
 
             </div>

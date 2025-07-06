@@ -384,7 +384,12 @@ export default function CreateFeedForm({
             
             
             <Button 
-              className="bg-gradient-to-r from-red-500 to-orange-500 rounded-sm"
+              className="
+                bg-gradient-to-r 
+                from-red-500 
+                to-orange-500 
+                rounded-sm
+              "
               type="submit"
             >
                 Preview

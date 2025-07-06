@@ -18,7 +18,6 @@ export function Header() {
 
     const [nav, setNav] = useState(false);
     const [shadow, setShadow] = useState(false);
-    const [navBg] = useState('#ffffff');
     const [linkColor] = useState('#1f2937');
 
     const { auth } = useAuth()
@@ -48,7 +47,6 @@ export function Header() {
     
     return (
         <div
-            style={{ backgroundColor: `${navBg}` }}
             className={
                 shadow
                 ? 'fixed w-full h-[60px] shadow-xl z-[100] ease-in-out duration-300 border-b border-black'
