@@ -32,7 +32,9 @@ export const formSchema = z.object({
   date_xpath: z.string().optional(),
   use_index_date: z.boolean(),
   item_url_pre_literal: z.string().optional(),
-  item_url_xpath: z.string().optional(),
+  item_url_xpath: z.string().min(4, {
+    message: "Item URL Xpath is required"
+  }),
   item_url_post_literal: z.string().optional(),
   source_name: z.string().min(2, { 
     message: "Source Name is required" 
@@ -69,8 +71,10 @@ const defaultValues = {
 
 export default function CreateFeedForm({ 
   onSubmit, 
+  onReset,
 }: { 
   onSubmit: (data: z.infer<typeof formSchema>) => void
+  onReset?: () => void
 }) {
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -78,6 +82,12 @@ export default function CreateFeedForm({
         defaultValues,
       }
     )
+
+    const handleReset = () => {
+      form.reset()
+      onReset?.() // call parent's reset handler if provided
+    }
+  
 
     function handleSubmit(values: z.infer<typeof formSchema>) {
       console.log("create feed form submitted!")
@@ -89,7 +99,7 @@ export default function CreateFeedForm({
         <Form {...form}>
           <form 
             onSubmit={form.handleSubmit(handleSubmit)} 
-            className="space-y-8"
+            className="space-y-5"
           >
             
             <FormField
@@ -97,7 +107,7 @@ export default function CreateFeedForm({
               name="url"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>URL</FormLabel>
+                  <FormLabel className="text-xs">URL</FormLabel>
                   <FormControl>
                     <Input 
                       placeholder="Enter the Website's URL" 
@@ -120,7 +130,7 @@ export default function CreateFeedForm({
                     checked={field.value}
                     onCheckedChange={field.onChange}
                   />
-                  <FormLabel>
+                  <FormLabel className="text-xs">
                     Enable Javascript Rendering
                   </FormLabel>
                   <FormControl>
@@ -135,9 +145,9 @@ export default function CreateFeedForm({
               name="item_xpath"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Item Xpath</FormLabel>
+                  <FormLabel className="text-xs">Item Xpath</FormLabel>
                   <FormControl>
-                    <Input 
+                    <Input
                       placeholder="Enter the Item's XPATH" 
                       {...field} 
                     />
@@ -152,7 +162,7 @@ export default function CreateFeedForm({
               name="title_xpath"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Title Xpath</FormLabel>
+                  <FormLabel className="text-xs">Title Xpath</FormLabel>
                   <FormControl>
                     <Input 
                       placeholder="Enter the Title's relative XPATH" 
@@ -169,7 +179,7 @@ export default function CreateFeedForm({
               name="description_xpath"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Description Xpath</FormLabel>
+                  <FormLabel className="text-xs">Description Xpath</FormLabel>
                   <FormControl>
                     <Input 
                       placeholder="Enter the description's relative XPATH" 
@@ -186,7 +196,7 @@ export default function CreateFeedForm({
               name="date_xpath"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Date Xpath</FormLabel>
+                  <FormLabel className="text-xs">Date Xpath</FormLabel>
                   <FormControl>
                     <Input 
                       placeholder="Enter the date's relative XPATH" 
@@ -209,7 +219,7 @@ export default function CreateFeedForm({
                     checked={field.value}
                     onCheckedChange={field.onChange}
                   />
-                  <FormLabel>
+                  <FormLabel className="text-xs">
                     Use Indexing Time
                   </FormLabel>
                   <FormControl>
@@ -224,7 +234,7 @@ export default function CreateFeedForm({
               name="item_url_xpath"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Item URL Xpath</FormLabel>
+                  <FormLabel className="text-xs">Item URL Xpath</FormLabel>
                   <FormControl>
                     <Input 
                       placeholder="Enter the item URL's relative XPATH" 
@@ -241,7 +251,7 @@ export default function CreateFeedForm({
               name="item_url_pre_literal"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Item URL Pre-literal</FormLabel>
+                  <FormLabel className="text-xs">Item URL Pre-literal</FormLabel>
                   <FormControl>
                     <Input 
                       placeholder="Enter the item URL's pre-literal" 
@@ -258,7 +268,7 @@ export default function CreateFeedForm({
               name="item_url_post_literal"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Item URL Post-literal</FormLabel>
+                  <FormLabel className="text-xs">Item URL Post-literal</FormLabel>
                   <FormControl>
                     <Input 
                       placeholder="Enter the item URL's post-literal" 
@@ -275,7 +285,7 @@ export default function CreateFeedForm({
               name="source_name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Source Name</FormLabel>
+                  <FormLabel className="text-xs">Source Name</FormLabel>
                   <FormControl>
                     <Input 
                       placeholder="Enter the Source Name" 
@@ -292,7 +302,7 @@ export default function CreateFeedForm({
               name="source_url"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Source URL</FormLabel>
+                  <FormLabel className="text-xs">Source URL</FormLabel>
                   <FormControl>
                     <Input 
                       placeholder="Enter the Source URL" 
@@ -309,7 +319,7 @@ export default function CreateFeedForm({
               name="image_url_pre_literal"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Image URL Pre-Literal</FormLabel>
+                  <FormLabel className="text-xs">Image URL Pre-Literal</FormLabel>
                   <FormControl>
                     <Input 
                       placeholder="Enter the Image URL's pre-literal" 
@@ -326,7 +336,7 @@ export default function CreateFeedForm({
               name="image_url_xpath"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Image URL Xpath</FormLabel>
+                  <FormLabel className="text-xs">Image URL Xpath</FormLabel>
                   <FormControl>
                     <Input 
                       placeholder="Enter the Image URL's XPATH" 
@@ -343,7 +353,7 @@ export default function CreateFeedForm({
               name="image_url_post_literal"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Image URL Post-Literal</FormLabel>
+                  <FormLabel className="text-xs">Image URL Post-Literal</FormLabel>
                   <FormControl>
                     <Input 
                       placeholder="Enter the Image URL's post-literal" 
@@ -360,7 +370,7 @@ export default function CreateFeedForm({
               name="default_image_url"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Default Image URL</FormLabel>
+                  <FormLabel className="text-xs">Default Image URL</FormLabel>
                   <FormControl>
                     <Input 
                       placeholder="Enter the default image URL" 
@@ -374,15 +384,15 @@ export default function CreateFeedForm({
             
             
             <Button 
-              className="bg-gradient-to-r from-red-500 to-orange-500"
+              className="bg-gradient-to-r from-red-500 to-orange-500 rounded-sm"
               type="submit"
             >
                 Preview
             </Button>
 
             <Button 
-              className="ml-3 w-[90px]"
-              onClick={() => form.reset(defaultValues)}
+              className="ml-3 rounded-sm"
+              onClick={handleReset}
             >
                 Reset
             </Button>
