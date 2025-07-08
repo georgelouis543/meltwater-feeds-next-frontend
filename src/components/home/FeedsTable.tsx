@@ -17,9 +17,9 @@ export default function FeedsTable({
     feeds: FeedData[]
 }) {
     return (
-      <Table className="shadow-md">
+      <Table className="shadow-md mt-4">
         <TableCaption className="font-bold">
-            List of all feeds
+            Latest Feeds
         </TableCaption>
         <TableHeader className="font-bold text-l shadow-xl">
           <TableRow>
@@ -27,8 +27,8 @@ export default function FeedsTable({
             <TableHead>Feed ID</TableHead>
             <TableHead>Type</TableHead>
             <TableHead>Created by</TableHead>
-            <TableHead>Modified date</TableHead>
-            <TableHead>Created date</TableHead>
+            <TableHead>Modified date (+0000)</TableHead>
+            <TableHead>Created date (+0000)</TableHead>
             <TableHead className="text-right">
                 Action
             </TableHead>

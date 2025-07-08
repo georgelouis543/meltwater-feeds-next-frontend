@@ -14,6 +14,23 @@ type Props = {
 export default function FeedRow({ 
     feed 
 }: Props) {
+
+    function formatDateString(dateStr: string) {
+        const date = new Date(dateStr)
+        const day = date.getUTCDate().toString().padStart(2, "0")
+        const month = date.toLocaleString(
+            "en-US", { 
+                month: "short", 
+                timeZone: "UTC" 
+            }
+        )
+        const year = date.getUTCFullYear()
+        const hours = date.getUTCHours().toString().padStart(2, "0")
+        const minutes = date.getUTCMinutes().toString().padStart(2, "0")
+        const seconds = date.getUTCSeconds().toString().padStart(2, "0")
+
+        return `${day} ${month} ${year}, ${hours}:${minutes}:${seconds}`
+    }
     return (
         <TableRow
             key={feed._id}
@@ -27,8 +44,14 @@ export default function FeedRow({
             <TableCell>{feed._id}</TableCell>
             <TableCell>{feed.feed_type}</TableCell>
             <TableCell>{feed.created_by}</TableCell>
-            <TableCell>{feed.updated_at}</TableCell>
-            <TableCell>{feed.created_at}</TableCell>
+
+            <TableCell>
+                {formatDateString(feed.updated_at)}
+            </TableCell>
+            <TableCell>
+                {formatDateString(feed.created_at)}
+            </TableCell>
+
             <TableCell 
                 className="
                     flex flex-row 
