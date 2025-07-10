@@ -3,7 +3,7 @@
 import FeedsTable from "@/components/home/FeedsTable";
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 import { FeedData } from "@/types/feedData";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import FeedsPagination from "@/components/home/FeedsPagination";
 import SearchBar from "@/components/home/SearchBar";
 import { toast } from "sonner";
@@ -24,41 +24,38 @@ export default function HomePage() {
 
     const axiosPrivate = useAxiosPrivate()
 
-    const fetchFeeds = async () => {
+    const fetchFeeds = useCallback(async () => {
       try {
         const query_params = new URLSearchParams({
           page: (page + 1).toString(),
           size: "15"
         })
-
+    
         if (filterParam && searchValue) {
           query_params.append(filterParam, searchValue)
         }
-
+    
         const res = await axiosPrivate.get(
-            `/feed-collection-handler/get-all-feeds?${query_params.toString()}`
-        ) 
-
+          `/feed-collection-handler/get-all-feeds?${query_params.toString()}`
+        )
+    
         setFeeds(res.data.feeds)
         setTotalPages(res.data.pages)
-        console.log(res.data)
-        
       } catch (err) {
         console.log(err)
       } finally {
         setIsLoading(false)
       }
-    }
-
+    }, [
+      page, 
+      filterParam, 
+      searchValue, 
+      axiosPrivate
+    ])
 
     useEffect(() => {
         fetchFeeds()
-      }, [
-        page, 
-        axiosPrivate, 
-        filterParam, 
-        searchValue
-      ]
+      }, [fetchFeeds]
     )
 
     // handling search

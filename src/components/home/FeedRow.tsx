@@ -4,7 +4,7 @@ import {
     TableRow, 
     TableCell 
 } from "../ui/table";
-import { CopyPlus, Pen } from "lucide-react";
+import { Pen } from "lucide-react";
 import DeleteFeedDialog from "./modals/delete-feed-dialog";
 import DuplicateFeedDialog from "./modals/duplicate-feed-dialog";
 
