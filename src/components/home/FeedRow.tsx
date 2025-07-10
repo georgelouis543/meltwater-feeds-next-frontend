@@ -4,15 +4,21 @@ import {
     TableRow, 
     TableCell 
 } from "../ui/table";
-import { CopyPlus, Pen, Trash2 } from "lucide-react";
+import { CopyPlus, Pen } from "lucide-react";
+import DeleteFeedDialog from "./modals/delete-feed-dialog";
+import DuplicateFeedDialog from "./modals/duplicate-feed-dialog";
 
 
 type Props = {
-    feed: FeedData
+    feed: FeedData,
+    onDelete: (id: string) => void
+    onDuplicate: (id: string) => void
 }
 
 export default function FeedRow({ 
-    feed 
+    feed,
+    onDelete,
+    onDuplicate 
 }: Props) {
 
     function formatDateString(dateStr: string) {
@@ -63,11 +69,13 @@ export default function FeedRow({
                 <Pen 
                     className="w-4 h-4" 
                 />
-                <CopyPlus 
-                    className="w-4 h-4" 
+                <DuplicateFeedDialog
+                    feedId={feed._id}
+                    onConfirmDuplicate={onDuplicate}
                 />
-                <Trash2 
-                    className="w-4 h-4" 
+                <DeleteFeedDialog
+                    feedId={feed._id}
+                    onConfirmDelete={onDelete}
                 />
             </TableCell>
         </TableRow>

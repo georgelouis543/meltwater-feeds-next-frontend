@@ -25,7 +25,7 @@ export default function FeedsPagination({
         ({ selected }) => onPageChange(selected)
     }
       containerClassName={"flex items-center gap-2 mt-6"}
-      activeClassName={"font-bold text-black"}
+      activeClassName={"font-bold text-white bg-black"}
       pageClassName={
         "px-3 py-1 border rounded hover:bg-gradient-to-r hover:from-red-500 hover:to-orange-500 hover:text-white"
       }

@@ -9,13 +9,21 @@ import {
 import FeedRow from "./FeedRow"
 import { FeedData } from "@/types/feedData"
   
- 
+type Props = {
+  feeds: FeedData[],
+  onDelete: (
+    feedId: string
+  ) => void,
+  onDuplicate: (
+    feedId: string
+  ) => void
+}
   
 export default function FeedsTable({ 
-    feeds
- }: {
-    feeds: FeedData[]
-}) {
+    feeds,
+    onDelete,
+    onDuplicate
+ }:Props) {
     return (
       <Table className="shadow-md mt-4">
         <TableCaption className="font-bold">
@@ -36,7 +44,12 @@ export default function FeedsTable({
         </TableHeader>
         <TableBody>
           {feeds.map((feed) => (
-            <FeedRow key={feed._id} feed={feed} />
+            <FeedRow 
+              key={feed._id} 
+              feed={feed}
+              onDelete={onDelete}
+              onDuplicate={onDuplicate} 
+            />
           ))}
         </TableBody>
       </Table>
