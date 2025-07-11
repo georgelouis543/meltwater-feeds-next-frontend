@@ -20,11 +20,14 @@ type Props = {
 
 export default function DeleteFeedDialog(
     { 
-        feedId, onConfirmDelete 
-    }: Props) {
+      feedId, 
+      onConfirmDelete 
+  }: Props) {
   return (
     <Dialog>
-      <DialogTrigger asChild>
+      <DialogTrigger 
+        asChild
+      >
         <Trash2 
             className="w-4 h-4 cursor-pointer" 
         />

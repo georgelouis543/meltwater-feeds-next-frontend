@@ -3,7 +3,11 @@
 import FeedsTable from "@/components/home/FeedsTable";
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 import { FeedData } from "@/types/feedData";
-import { useCallback, useEffect, useState } from "react";
+import { 
+  useCallback, 
+  useEffect, 
+  useState 
+} from "react";
 import FeedsPagination from "@/components/home/FeedsPagination";
 import SearchBar from "@/components/home/SearchBar";
 import { toast } from "sonner";

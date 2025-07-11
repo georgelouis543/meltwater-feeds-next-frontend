@@ -110,7 +110,8 @@ export default function SearchBar({
                             rounded-none
                             md:w-[70px] 
                             shadow-md
-                        ">
+                        "
+                    >
                         <Search />
                     </Button>
 
@@ -126,7 +127,9 @@ export default function SearchBar({
                             hover:to-orange-500
                         "
                     >
-                        <RefreshCw className="text-black"/>
+                        <RefreshCw 
+                            className="text-black"
+                        />
                     </Button>
             </div>
       </form>
