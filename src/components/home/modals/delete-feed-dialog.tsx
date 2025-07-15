@@ -51,7 +51,7 @@ export default function DeleteFeedDialog(
                 () => onConfirmDelete(feedId)
             }
             >
-              Confirm Delete
+              Confirm
             </Button>
           </DialogClose>
         </DialogFooter>
