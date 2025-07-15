@@ -11,7 +11,7 @@ import {
     AlertDialogTrigger 
 } from "../ui/alert-dialog";
 import { Button } from "../ui/button";
-import { FormValues } from "@/app/(rs)/html-to-rss/create-feed/page";
+import { FormValues } from "@/app/(rs)/rss-playground/create/page";
 import { useState } from "react";
 import CreateFeedSuccessModal from "./success-modal";
 import { toast } from "sonner";
