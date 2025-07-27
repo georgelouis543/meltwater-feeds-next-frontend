@@ -7,6 +7,7 @@ import {
 import { Pen } from "lucide-react";
 import DeleteFeedDialog from "./modals/delete-feed-dialog";
 import DuplicateFeedDialog from "./modals/duplicate-feed-dialog";
+import { useRouter } from "next/navigation";
 
 
 type Props = {
@@ -20,6 +21,16 @@ export default function FeedRow({
     onDelete,
     onDuplicate 
 }: Props) {
+    const router = useRouter();
+
+    function handleEditClick() {
+        if (feed.feed_type === "html_to_rss") {
+          router.push(`/html-to-rss/edit-feed/${feed._id}`);
+        } else {
+          router.push(`/rss-playground/edit-feed/${feed._id}`);
+        }
+    }
+    
 
     function formatDateString(dateStr: string) {
         const date = new Date(dateStr)
@@ -67,7 +78,8 @@ export default function FeedRow({
                 "
             >
                 <Pen 
-                    className="w-4 h-4" 
+                    className="w-4 h-4 cursor-pointer" 
+                    onClick={handleEditClick}
                 />
                 <DuplicateFeedDialog
                     feedId={feed._id}

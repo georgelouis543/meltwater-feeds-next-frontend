@@ -1,6 +1,8 @@
 'use client'
 
+import { useEffect } from "react"
 import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 import { 
     Form,
     FormField, 
@@ -13,14 +15,13 @@ import { Input } from "@/components/ui/input"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { Checkbox } from "../ui/checkbox"
 
 export const formSchema = z.object({
   url: z.string().url({ 
     message: "Please enter a valid URL" 
   }),
-  is_newsfeed: z.boolean(),
-  feed_type: z.enum(["rss_to_mwfeed"]),
+  is_javascript_enabled: z.boolean(),
+  feed_type: z.enum(["html_to_rss"]),
   item_xpath: z.string().min(5, { 
     message: "Item XPath is required" 
   }),
@@ -42,18 +43,16 @@ export const formSchema = z.object({
   source_url: z.string().url({
     message: "Please enter a valid source URL"
   }),
-  source_name_xpath: z.string().optional(),
-  source_url_xpath: z.string().optional(),
   image_url_pre_literal: z.string().optional(),
   image_url_xpath: z.string().optional(),
   image_url_post_literal: z.string().optional(),
   default_image_url: z.string().url().optional(),
 });
 
-const defaultValues = {
+const fallbackDefaultValues = {
   url: "",
-  is_newsfeed: false,
-  feed_type: "rss_to_mwfeed",
+  is_javascript_enabled: false,
+  feed_type: "html_to_rss",
   item_xpath: "",
   title_xpath: "",
   description_xpath: "",
@@ -65,27 +64,34 @@ const defaultValues = {
   item_url_post_literal: "",
   source_name: "",
   source_url: "",
-  source_name_xpath: "",
-  source_url_xpath: "",
   image_url_pre_literal: "",
   image_url_xpath: "",
   image_url_post_literal: "",
   default_image_url: ""
 } as const
 
-export default function CreateFeedForm({ 
+export default function EditFeedForm({ 
   onSubmit, 
   onReset,
+  defaultValues
 }: { 
   onSubmit: (data: z.infer<typeof formSchema>) => void
   onReset?: () => void
+  defaultValues?: Partial<z.infer<typeof formSchema>>
 }) {
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
-        defaultValues,
+        defaultValues: defaultValues ?? fallbackDefaultValues
       }
     )
+
+    // This function is used to force reset values to the fetched ones
+    useEffect(() => {
+      if (defaultValues) {
+        form.reset(defaultValues)
+      }
+    }, [defaultValues])
 
     const handleReset = () => {
       form.reset()
@@ -98,7 +104,7 @@ export default function CreateFeedForm({
       console.log(values)
       onSubmit(values)
     }
-    
+
       return (
         <Form {...form}>
           <form 
@@ -114,7 +120,7 @@ export default function CreateFeedForm({
                   <FormLabel className="text-xs">URL</FormLabel>
                   <FormControl>
                     <Input 
-                      placeholder="Enter the Feed URL" 
+                      placeholder="Enter the Website's URL" 
                       {...field} 
                     />
                   </FormControl>
@@ -125,7 +131,7 @@ export default function CreateFeedForm({
 
             <FormField
               control={form.control}
-              name="is_newsfeed"
+              name="is_javascript_enabled"
               render={({ field }) => (
                 <FormItem 
                   className="flex flex-row items-center gap-2"
@@ -135,7 +141,7 @@ export default function CreateFeedForm({
                     onCheckedChange={field.onChange}
                   />
                   <FormLabel className="text-xs">
-                    Is Newsfeed
+                    Enable Javascript Rendering
                   </FormLabel>
                   <FormControl>
                   </FormControl>
@@ -252,6 +258,40 @@ export default function CreateFeedForm({
 
             <FormField
               control={form.control}
+              name="item_url_pre_literal"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-xs">Item URL Pre-literal</FormLabel>
+                  <FormControl>
+                    <Input 
+                      placeholder="Enter the item URL's pre-literal" 
+                      {...field} 
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="item_url_post_literal"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-xs">Item URL Post-literal</FormLabel>
+                  <FormControl>
+                    <Input 
+                      placeholder="Enter the item URL's post-literal" 
+                      {...field} 
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
               name="source_name"
               render={({ field }) => (
                 <FormItem>
@@ -286,30 +326,13 @@ export default function CreateFeedForm({
 
             <FormField
               control={form.control}
-              name="source_url_xpath"
+              name="image_url_pre_literal"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-xs">Source URL Xpath</FormLabel>
+                  <FormLabel className="text-xs">Image URL Pre-Literal</FormLabel>
                   <FormControl>
                     <Input 
-                      placeholder="Enter the item Source URL's relative XPATH" 
-                      {...field} 
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="source_name_xpath"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-xs">Source name Xpath</FormLabel>
-                  <FormControl>
-                    <Input 
-                      placeholder="Enter the item Source name's relative XPATH" 
+                      placeholder="Enter the Image URL's pre-literal" 
                       {...field} 
                     />
                   </FormControl>
@@ -327,6 +350,23 @@ export default function CreateFeedForm({
                   <FormControl>
                     <Input 
                       placeholder="Enter the Image URL's XPATH" 
+                      {...field} 
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="image_url_post_literal"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-xs">Image URL Post-Literal</FormLabel>
+                  <FormControl>
+                    <Input 
+                      placeholder="Enter the Image URL's post-literal" 
                       {...field} 
                     />
                   </FormControl>
