@@ -70,7 +70,7 @@ export function Header() {
                     </Link>
 
                     <h1 className='ml-4 text-xl font-bold text-black'>
-                        meltwater feeds
+                        Meltwater Feeds
                     </h1>  
 
                 </div>
@@ -211,7 +211,7 @@ export function Header() {
                                 </Link>
                                 
                                 <h1 className='ml-4 text-xl font-bold text-black'>
-                                    meltwater feeds
+                                    Meltwater Feeds
                                 </h1>  
 
                             </div>
