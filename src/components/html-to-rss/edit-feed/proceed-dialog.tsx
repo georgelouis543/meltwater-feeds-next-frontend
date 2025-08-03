@@ -18,10 +18,11 @@ import { toast } from "sonner";
 
 type Props = {
     disabled: boolean,
-    formData: FormValues | null
+    formData: FormValues | null,
+    feedID: string
 }
 
-type CreateFeedResponse = {
+type EditFeedResponse = {
     feed_url: string,
     feed_id: string,
     success: boolean
@@ -29,7 +30,8 @@ type CreateFeedResponse = {
 
 export default function ConfirmEditFeedDialog({ 
     disabled,
-    formData 
+    formData,
+    feedID 
 }: Props) {
     const axiosPrivate = useAxiosPrivate()
 
@@ -42,12 +44,12 @@ export default function ConfirmEditFeedDialog({
         if (!formData) return
 
         try {
-            const response = await axiosPrivate.post
+            const response = await axiosPrivate.put
             (
-                "/html-to-rss-convert/save-feed", 
+                `/html-to-rss-convert/update-html-to-rss-converted-feed/${feedID}`, 
                 formData
             )
-            const typedResponse = response.data as CreateFeedResponse
+            const typedResponse = response.data as EditFeedResponse
             console.log(typedResponse)
             setFeedLink(typedResponse.feed_url || "")
             setShowSuccessModal(true)      
@@ -77,10 +79,10 @@ export default function ConfirmEditFeedDialog({
 
                     <AlertDialogHeader>
                         <AlertDialogTitle>
-                            Are you sure you want to create this feed?
+                            Are you sure you want to update this feed?
                         </AlertDialogTitle>
                         <AlertDialogDescription>
-                            This will create the feed using the current preview.
+                            This will Edit the feed using the current preview.
                         </AlertDialogDescription>
                     </AlertDialogHeader>
 
