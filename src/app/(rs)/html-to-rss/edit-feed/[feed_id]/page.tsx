@@ -126,7 +126,7 @@ export default function EditFeedPage() {
 
                 <div className="w-full flex md:justify-end">
                     <ConfirmEditFeedDialog
-                        feedID={feed_id} 
+                        feedID={feed_id as string} 
                         formData={formData}
                         disabled={
                             articles.length === 0
