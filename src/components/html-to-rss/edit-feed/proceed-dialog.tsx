@@ -49,6 +49,12 @@ export default function ConfirmEditFeedDialog({
                 `/html-to-rss-convert/update-html-to-rss-converted-feed/${feedID}`, 
                 formData
             )
+            
+            if (response.status === 204) {
+                toast.info("Nothing to change!")
+                return
+            }
+
             const typedResponse = response.data as EditFeedResponse
             console.log(typedResponse)
             setFeedLink(typedResponse.feed_url || "")
