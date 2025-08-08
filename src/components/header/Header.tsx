@@ -4,13 +4,13 @@ import {
     useState 
 } from "react";
 import { 
-    LogOut,
     Menu, 
     X 
 } from 'lucide-react';
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import useAuth from "@/hooks/useAuth";
+import LogoutButton from "./LogoutButton";
 
 export function Header() {
 
@@ -150,9 +150,7 @@ export function Header() {
                                 hover:bg-gradient-to-r hover:from-red-500 hover:to-orange-500 
                                 hover:text-white transition-colors duration-300 cursor-pointer"
                         >
-                            <LogOut 
-                                size={20}
-                            />
+                            <LogoutButton />
                         </li>
 
                     </ul>
@@ -286,6 +284,12 @@ export function Header() {
                                 </Link>
                             )
                         }
+
+                        <li
+                            className='py-4 text-sm font-bold'
+                        >
+                            <LogoutButton />
+                        </li>
 
                     </ul>
         

@@ -23,20 +23,23 @@ export default function FeedsPagination({
       pageRangeDisplayed={5}
       onPageChange={
         ({ selected }) => onPageChange(selected)
-    }
-      containerClassName={"flex items-center gap-2 mt-6"}
-      activeClassName={"font-bold text-white bg-black"}
-      pageClassName={
-        "px-3 py-1 border rounded hover:bg-gradient-to-r hover:from-red-500 hover:to-orange-500 hover:text-white"
       }
-      previousClassName={
-        "px-3 py-1 border rounded bg-gradient-to-r from-red-500 to-orange-500 text-white"
-      }
-      nextClassName={
-        "px-3 py-1 border rounded bg-gradient-to-r from-red-500 to-orange-500 text-white"
-      }
-      breakClassName={"px-3 py-1"}
       forcePage={currentPage}
+    
+      containerClassName="flex items-center gap-2 mt-6"
+      activeClassName="font-bold text-white bg-black"
+    
+      pageClassName="border rounded"
+      pageLinkClassName="block px-3 py-1 hover:bg-gradient-to-r hover:from-red-500 hover:to-orange-500 hover:text-white"
+    
+      previousClassName="border rounded"
+      previousLinkClassName="block px-3 py-1 bg-gradient-to-r from-red-500 to-orange-500 text-white"
+    
+      nextClassName="border rounded"
+      nextLinkClassName="block px-3 py-1 bg-gradient-to-r from-red-500 to-orange-500 text-white"
+    
+      breakClassName="border rounded"
+      breakLinkClassName="block px-3 py-1"
     />
   )
 }
