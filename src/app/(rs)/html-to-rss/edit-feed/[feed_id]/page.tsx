@@ -85,7 +85,7 @@ export default function EditFeedPage() {
                     md:border-gray-[800]
                     md:shadow-sm
                     md:rounded-sm 
-                    md:h-[800px]
+                    md:h-[752px]
                     md:overflow-y-auto
                     shadow-md rounded-md
                     border-1 border-gray-[700]

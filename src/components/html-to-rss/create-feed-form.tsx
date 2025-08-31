@@ -14,6 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { Checkbox } from "../ui/checkbox"
+import Collapse from "./collapse-fields"
 
 export const formSchema = z.object({
   url: z.string().url({ 
@@ -191,196 +192,210 @@ export default function CreateFeedForm({
               )}
             />
 
-            <FormField
-              control={form.control}
-              name="date_xpath"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-xs">Date Xpath</FormLabel>
-                  <FormControl>
-                    <Input 
-                      placeholder="Enter the date's relative XPATH" 
-                      {...field} 
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <Collapse title="Set Date fields">
+              <FormField
+                control={form.control}
+                name="date_xpath"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-xs">Date Xpath</FormLabel>
+                    <FormControl>
+                      <Input 
+                        placeholder="Enter the date's relative XPATH" 
+                        {...field} 
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name="use_index_date"
-              render={({ field }) => (
-                <FormItem 
-                  className="flex flex-row items-center gap-2"
-                >
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                  <FormLabel className="text-xs">
-                    Use Indexing Time
-                  </FormLabel>
-                  <FormControl>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="item_url_xpath"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-xs">Item URL Xpath</FormLabel>
-                  <FormControl>
-                    <Input 
-                      placeholder="Enter the item URL's relative XPATH" 
-                      {...field} 
+              <FormField
+                control={form.control}
+                name="use_index_date"
+                render={({ field }) => (
+                  <FormItem 
+                    className="flex flex-row items-center gap-2"
+                  >
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
                     />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                    <FormLabel className="text-xs">
+                      Use Indexing Time
+                    </FormLabel>
+                    <FormControl>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </Collapse>
+            
+            <Collapse 
+              title="Set item URL fields"
+            >
+              <FormField
+                control={form.control}
+                name="item_url_xpath"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-xs">Item URL Xpath</FormLabel>
+                    <FormControl>
+                      <Input 
+                        placeholder="Enter the item URL's relative XPATH" 
+                        {...field} 
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name="item_url_pre_literal"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-xs">Item URL Pre-literal</FormLabel>
-                  <FormControl>
-                    <Input 
-                      placeholder="Enter the item URL's pre-literal" 
-                      {...field} 
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form.control}
+                name="item_url_pre_literal"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-xs">Item URL Pre-literal</FormLabel>
+                    <FormControl>
+                      <Input 
+                        placeholder="Enter the item URL's pre-literal" 
+                        {...field} 
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name="item_url_post_literal"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-xs">Item URL Post-literal</FormLabel>
-                  <FormControl>
-                    <Input 
-                      placeholder="Enter the item URL's post-literal" 
-                      {...field} 
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form.control}
+                name="item_url_post_literal"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-xs">Item URL Post-literal</FormLabel>
+                    <FormControl>
+                      <Input 
+                        placeholder="Enter the item URL's post-literal" 
+                        {...field} 
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </Collapse>
 
-            <FormField
-              control={form.control}
-              name="source_name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-xs">Source Name</FormLabel>
-                  <FormControl>
-                    <Input 
-                      placeholder="Enter the Source Name" 
-                      {...field} 
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <Collapse 
+              title="Set Source fields"
+            >
+              <FormField
+                control={form.control}
+                name="source_name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-xs">Source Name</FormLabel>
+                    <FormControl>
+                      <Input 
+                        placeholder="Enter the Source Name" 
+                        {...field} 
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name="source_url"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-xs">Source URL</FormLabel>
-                  <FormControl>
-                    <Input 
-                      placeholder="Enter the Source URL" 
-                      {...field} 
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form.control}
+                name="source_url"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-xs">Source URL</FormLabel>
+                    <FormControl>
+                      <Input 
+                        placeholder="Enter the Source URL" 
+                        {...field} 
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </Collapse>
 
-            <FormField
-              control={form.control}
-              name="image_url_pre_literal"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-xs">Image URL Pre-Literal</FormLabel>
-                  <FormControl>
-                    <Input 
-                      placeholder="Enter the Image URL's pre-literal" 
-                      {...field} 
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <Collapse 
+              title="Set image fields"
+            >
+              <FormField
+                control={form.control}
+                name="image_url_pre_literal"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-xs">Image URL Pre-Literal</FormLabel>
+                    <FormControl>
+                      <Input 
+                        placeholder="Enter the Image URL's pre-literal" 
+                        {...field} 
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name="image_url_xpath"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-xs">Image URL Xpath</FormLabel>
-                  <FormControl>
-                    <Input 
-                      placeholder="Enter the Image URL's XPATH" 
-                      {...field} 
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form.control}
+                name="image_url_xpath"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-xs">Image URL Xpath</FormLabel>
+                    <FormControl>
+                      <Input 
+                        placeholder="Enter the Image URL's XPATH" 
+                        {...field} 
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name="image_url_post_literal"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-xs">Image URL Post-Literal</FormLabel>
-                  <FormControl>
-                    <Input 
-                      placeholder="Enter the Image URL's post-literal" 
-                      {...field} 
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form.control}
+                name="image_url_post_literal"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-xs">Image URL Post-Literal</FormLabel>
+                    <FormControl>
+                      <Input 
+                        placeholder="Enter the Image URL's post-literal" 
+                        {...field} 
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name="default_image_url"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-xs">Default Image URL</FormLabel>
-                  <FormControl>
-                    <Input 
-                      placeholder="Enter the default image URL" 
-                      {...field} 
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form.control}
+                name="default_image_url"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-xs">Default Image URL</FormLabel>
+                    <FormControl>
+                      <Input 
+                        placeholder="Enter the default image URL" 
+                        {...field} 
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </Collapse>
             
             
             <Button 
