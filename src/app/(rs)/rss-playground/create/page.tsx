@@ -58,7 +58,7 @@ export default function CreateFeedPage() {
                     md:border-gray-[800]
                     md:shadow-sm
                     md:rounded-sm 
-                    md:h-[800px]
+                    md:h-[752px]
                     md:overflow-y-auto
                     shadow-md rounded-md
                     border-1 border-gray-[700]
@@ -68,6 +68,10 @@ export default function CreateFeedPage() {
                     onSubmit={handleFormSubmit}
                     onReset={handleReset}
                  /> 
+
+                <p className="text-[11px]">
+                    Stuck extracting XPATH? Read this <a className="underline text-blue-600" href="https://docs.google.com/document/d/1HP_7spe9mcEZPXesDuwiynU104PmRG7uMxpQFqCL32U/">file</a> to know how to play around!
+                </p> 
             </div>
 
             <div className="flex flex-col w-full md:w-[70%] md:ml-7">

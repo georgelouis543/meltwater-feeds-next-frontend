@@ -2,7 +2,6 @@
 
 import { useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
 import { 
     Form,
     FormField, 
@@ -15,14 +14,15 @@ import { Input } from "@/components/ui/input"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+import { Checkbox } from "@/components/ui/checkbox"
 import Collapse from "../collapse-fields"
 
 export const formSchema = z.object({
   url: z.string().url({ 
     message: "Please enter a valid URL" 
   }),
-  is_javascript_enabled: z.boolean(),
-  feed_type: z.enum(["html_to_rss"]),
+  is_newsfeed: z.boolean(),
+  feed_type: z.enum(["rss_to_mwfeed"]),
   item_xpath: z.string().min(5, { 
     message: "Item XPath is required" 
   }),
@@ -44,6 +44,8 @@ export const formSchema = z.object({
   source_url: z.string().url({
     message: "Please enter a valid source URL"
   }),
+  source_name_xpath: z.string().optional(),
+  source_url_xpath: z.string().optional(),
   image_url_pre_literal: z.string().optional(),
   image_url_xpath: z.string().optional(),
   image_url_post_literal: z.string().optional(),
@@ -52,8 +54,8 @@ export const formSchema = z.object({
 
 const fallbackDefaultValues = {
   url: "",
-  is_javascript_enabled: false,
-  feed_type: "html_to_rss",
+  is_newsfeed: false,
+  feed_type: "rss_to_mwfeed",
   item_xpath: "",
   title_xpath: "",
   description_xpath: "",
@@ -65,6 +67,8 @@ const fallbackDefaultValues = {
   item_url_post_literal: "",
   source_name: "",
   source_url: "",
+  source_name_xpath: "",
+  source_url_xpath: "",
   image_url_pre_literal: "",
   image_url_xpath: "",
   image_url_post_literal: "",
@@ -77,7 +81,7 @@ export default function EditFeedForm({
   defaultValues
 }: { 
   onSubmit: (data: z.infer<typeof formSchema>) => void
-  onReset?: () => void
+  onReset?: () => void,
   defaultValues?: Partial<z.infer<typeof formSchema>>
 }) {
 
@@ -89,9 +93,9 @@ export default function EditFeedForm({
 
     // This function is used to force reset values to the fetched ones
     useEffect(() => {
-      if (defaultValues) {
-        form.reset(defaultValues)
-      }
+        if (defaultValues) {
+            form.reset(defaultValues)
+        }
     }, [defaultValues])
 
     const handleReset = () => {
@@ -101,11 +105,11 @@ export default function EditFeedForm({
   
 
     function handleSubmit(values: z.infer<typeof formSchema>) {
-      console.log("Edit feed form submitted!")
+      console.log("create feed form submitted!")
       console.log(values)
       onSubmit(values)
     }
-
+    
       return (
         <Form {...form}>
           <form 
@@ -121,7 +125,7 @@ export default function EditFeedForm({
                   <FormLabel className="text-xs">URL</FormLabel>
                   <FormControl>
                     <Input 
-                      placeholder="Enter the Website's URL" 
+                      placeholder="Enter the Feed URL" 
                       {...field} 
                     />
                   </FormControl>
@@ -132,7 +136,7 @@ export default function EditFeedForm({
 
             <FormField
               control={form.control}
-              name="is_javascript_enabled"
+              name="is_newsfeed"
               render={({ field }) => (
                 <FormItem 
                   className="flex flex-row items-center gap-2"
@@ -142,7 +146,7 @@ export default function EditFeedForm({
                     onCheckedChange={field.onChange}
                   />
                   <FormLabel className="text-xs">
-                    Enable Javascript Rendering
+                    Is Newsfeed
                   </FormLabel>
                   <FormControl>
                   </FormControl>
@@ -202,6 +206,23 @@ export default function EditFeedForm({
               )}
             />
 
+            <FormField
+              control={form.control}
+              name="item_url_xpath"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-xs">Item URL Xpath</FormLabel>
+                  <FormControl>
+                    <Input 
+                      placeholder="Enter the item URL's relative XPATH" 
+                      {...field} 
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <Collapse title="Set Date fields">
               <FormField
                 control={form.control}
@@ -242,60 +263,7 @@ export default function EditFeedForm({
               />
             </Collapse>
 
-            <Collapse title="Set item url fields">
-              <FormField
-                control={form.control}
-                name="item_url_xpath"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-xs">Item URL Xpath</FormLabel>
-                    <FormControl>
-                      <Input 
-                        placeholder="Enter the item URL's relative XPATH" 
-                        {...field} 
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="item_url_pre_literal"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-xs">Item URL Pre-literal</FormLabel>
-                    <FormControl>
-                      <Input 
-                        placeholder="Enter the item URL's pre-literal" 
-                        {...field} 
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="item_url_post_literal"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-xs">Item URL Post-literal</FormLabel>
-                    <FormControl>
-                      <Input 
-                        placeholder="Enter the item URL's post-literal" 
-                        {...field} 
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </Collapse>
-
-            <Collapse title="Set source fields">
+            <Collapse title="Set Source fields">
               <FormField
                 control={form.control}
                 name="source_name"
@@ -329,18 +297,16 @@ export default function EditFeedForm({
                   </FormItem>
                 )}
               />
-            </Collapse>
 
-            <Collapse title="Set image fields">
               <FormField
                 control={form.control}
-                name="image_url_pre_literal"
+                name="source_url_xpath"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs">Image URL Pre-Literal</FormLabel>
+                    <FormLabel className="text-xs">Source URL Xpath</FormLabel>
                     <FormControl>
                       <Input 
-                        placeholder="Enter the Image URL's pre-literal" 
+                        placeholder="Enter the item Source URL's relative XPATH" 
                         {...field} 
                       />
                     </FormControl>
@@ -349,6 +315,25 @@ export default function EditFeedForm({
                 )}
               />
 
+              <FormField
+                control={form.control}
+                name="source_name_xpath"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-xs">Source name Xpath</FormLabel>
+                    <FormControl>
+                      <Input 
+                        placeholder="Enter the item Source name's relative XPATH" 
+                        {...field} 
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </Collapse>
+
+            <Collapse title="Set Image fields">
               <FormField
                 control={form.control}
                 name="image_url_xpath"
@@ -358,23 +343,6 @@ export default function EditFeedForm({
                     <FormControl>
                       <Input 
                         placeholder="Enter the Image URL's XPATH" 
-                        {...field} 
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="image_url_post_literal"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-xs">Image URL Post-Literal</FormLabel>
-                    <FormControl>
-                      <Input 
-                        placeholder="Enter the Image URL's post-literal" 
                         {...field} 
                       />
                     </FormControl>

@@ -67,7 +67,14 @@ export default function CreateFeedPage() {
                 <CreateFeedForm 
                     onSubmit={handleFormSubmit}
                     onReset={handleReset}
-                 /> 
+                 />
+
+                <p 
+                    className="text-[11px]"
+                >
+                    Stuck extracting XPATH? Read this <a className="underline text-blue-600" href="https://docs.google.com/document/d/1HP_7spe9mcEZPXesDuwiynU104PmRG7uMxpQFqCL32U/">file</a> to know how to play around!
+                </p> 
+
             </div>
 
             <div className="flex flex-col w-full md:w-[70%] md:ml-7">
