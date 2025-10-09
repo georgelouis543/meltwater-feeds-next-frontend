@@ -150,7 +150,7 @@ export default function EditUserPage() {
     <div className="flex flex-col w-full">
       <div className="max-w-[500px] w-full mx-auto p-6 mt-10 border-1 border-black rounded-sm shadow-md">
               <h2 className="text-2xl font-bold mb-6 text-center underline">
-                Register a New User
+                Update Existing User
               </h2>
 
               <Form {...form}>
