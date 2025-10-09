@@ -20,8 +20,8 @@ import {
 } from "@/components/ui/select"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Loader } from "lucide-react"
-import { useRouter } from "next/navigation"
-import { useRef, useState } from "react"
+import { useParams, useRouter } from "next/navigation"
+import { useEffect, useRef, useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
@@ -40,35 +40,67 @@ type ValidationError = {
   ctx?: Record<string, unknown>;
 };
 
-export default function AddUserPage() {
-  const errRef = useRef<HTMLParagraphElement>(null);
-  const [errMsg, setErrMsg] = useState('')
-  const router = useRouter()
+export default function EditUserPage() {
+    const { user_id } = useParams<{ user_id: string }>();
 
-  const [isLoading, setIsLoading] = useState(false)
+    const errRef = useRef<HTMLParagraphElement>(null);
+    const [errMsg, setErrMsg] = useState('')
+
+    const router = useRouter()
+    
+    const [isLoading, setIsLoading] = useState(false)
   
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      user_email: "",
-      user_name: "",
-      user_role: "user",
-    },
-  })
+    const form = useForm<z.infer<typeof formSchema>>({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+        user_email: "",
+        user_name: "",
+        user_role: "user",
+        },
+    })
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    useEffect(() => {
+        const fetchUser = async () => {
+          try {
+            setIsLoading(true);
+            const response = await axiosPrivate.get(`/admin/get-user/${user_id}`);
+            const user = response.data;
+      
+            form.reset({
+              user_email: user.user_email,
+              user_name: user.user_name,
+              user_role: user.user_role,
+            });
+          } catch (error: unknown) {
+            console.error("Failed to fetch user:", error);
+            toast.error("Failed to load user details.");
+          } finally {
+            setIsLoading(false);
+          }
+        };
+      
+        if (user_id) fetchUser();
+    }, [user_id, form]);
+
+    const onSubmit = async (values: z.infer<typeof formSchema>) => {
         setIsLoading(true);
         console.log(values)
         try {
-        const response = await axiosPrivate.post(
-            "/admin/create-user",
-            values
-        )
-        form.reset()
-        toast.success(response.data?.message);
-        router.push("/admin/view-users")
+            const response = await axiosPrivate.put(
+                `/admin/update-user/${user_id}`,
+                values
+            )
+            
+            if (response.status === 204) {
+                toast.info("Nothing to change!")
+                return
+            }
+
+            form.reset()
+            toast.success(response.data?.message);
+            router.push("/admin/view-users")
         } catch (error: unknown) {
-        console.error("Failed to create user:", error)
+            console.error("Failed to update user:", error)
 
         if (typeof error === "object" && error !== null && "status" in error) {
             const err = error as { 
@@ -78,33 +110,33 @@ export default function AddUserPage() {
             } }
 
             if (!err.status) {
-            setErrMsg("No server response");
+                setErrMsg("No server response");
             } else if (err.status === 400) {
-            setErrMsg("Bad Request");
+                setErrMsg("Bad Request");
             } else if (err.status === 409) {
-            setErrMsg("Username/email already exists");
+                setErrMsg("Username/email already exists");
             } else if (err.status === 422) {
             
-            const errDetail = (err.data as 
-                { 
-                detail?: ValidationError[] 
+                const errDetail = (err.data as 
+                    { 
+                    detail?: ValidationError[] 
+                    }
+                )?.detail
+
+                if (Array.isArray(errDetail) && errDetail.length > 0) {
+                    setErrMsg(errDetail[0]?.msg || "Invalid input");
+                } else {
+                    setErrMsg(err.data?.detail || "Failed to create User!");
                 }
-            )?.detail
 
-            if (Array.isArray(errDetail) && errDetail.length > 0) {
-                setErrMsg(errDetail[0]?.msg || "Invalid input");
-            } else {
-                setErrMsg(err.data?.detail || "Failed to create User!");
-            }
-
+                } else {
+                    setErrMsg("An unknown error occurred");
+            } 
             } else {
                 setErrMsg("An unknown error occurred");
-        } 
-        } else {
-            setErrMsg("An unknown error occurred");
-        }
-        errRef.current?.focus();
-        toast.error("Failed to create user. Please try again.")
+            }
+            errRef.current?.focus();
+            toast.error("Failed to create user. Please try again.")
         } finally {
             setIsLoading(false);
         }
@@ -161,7 +193,10 @@ export default function AddUserPage() {
                       render={({ field }) => (
                         <FormItem>
                             <FormLabel>Assign Role</FormLabel>
-                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <Select 
+                                onValueChange={field.onChange} 
+                                value={field.value}
+                            >
                             <FormControl>
                                 <SelectTrigger>
                                 <SelectValue placeholder="Select a date range" />
@@ -180,15 +215,18 @@ export default function AddUserPage() {
                   <Button 
                     className="w-[90px]"
                     type="submit" 
-                    disabled={isLoading}>
-                    {isLoading ? <Loader /> : "Register"}
+                    disabled={isLoading || !form.formState.isDirty}>
+                    {isLoading ? <Loader /> : "Update"}
                   </Button>
                     
                 </form>
               </Form>
       </div>
-
-      <p ref={errRef} className={errClass} aria-live="assertive">
+      
+      <p 
+        ref={errRef} 
+        className={errClass} 
+        aria-live="assertive">
         {errMsg}
       </p>
     
