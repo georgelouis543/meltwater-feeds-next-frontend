@@ -15,13 +15,15 @@ import { Trash2 } from "lucide-react"
 
 type Props = {
   feedId: string
-  onConfirmDelete: (id: string) => void
+  onConfirmDelete: (id: string) => void,
+  disabled?: boolean 
 }
 
 export default function DeleteFeedDialog(
     { 
       feedId, 
-      onConfirmDelete 
+      onConfirmDelete,
+      disabled = false
   }: Props) {
   return (
     <Dialog>
@@ -29,11 +31,16 @@ export default function DeleteFeedDialog(
         asChild
       >
         <Trash2 
-            className="w-4 h-4 cursor-pointer" 
+          className={`w-4 h-4 transition 
+          ${disabled 
+            ? "opacity-40 cursor-not-allowed pointer-events-none" 
+            : "cursor-pointer hover:text-red-600"}`
+          }
         />
       </DialogTrigger>
 
-      <DialogContent>
+      {!disabled && (
+        <DialogContent>
         <DialogHeader>
           <DialogTitle>Delete Feed</DialogTitle>
           <DialogDescription>
@@ -49,13 +56,15 @@ export default function DeleteFeedDialog(
               variant="destructive" 
               onClick={
                 () => onConfirmDelete(feedId)
-            }
+              }
             >
               Confirm
             </Button>
           </DialogClose>
         </DialogFooter>
       </DialogContent>
+      )}
+
     </Dialog>
   )
 }

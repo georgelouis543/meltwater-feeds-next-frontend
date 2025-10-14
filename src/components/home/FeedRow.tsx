@@ -12,12 +12,14 @@ import { useRouter } from "next/navigation";
 
 type Props = {
     feed: FeedData,
+    user_email: string,
     onDelete: (id: string) => void
     onDuplicate: (id: string) => void
 }
 
 export default function FeedRow({ 
     feed,
+    user_email,
     onDelete,
     onDuplicate 
 }: Props) {
@@ -88,6 +90,9 @@ export default function FeedRow({
                 <DeleteFeedDialog
                     feedId={feed._id}
                     onConfirmDelete={onDelete}
+                    disabled={
+                        feed.created_by !== user_email
+                    }
                 />
             </TableCell>
         </TableRow>

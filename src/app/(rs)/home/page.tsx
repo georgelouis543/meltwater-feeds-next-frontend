@@ -11,9 +11,13 @@ import {
 import FeedsPagination from "@/components/home/FeedsPagination";
 import SearchBar from "@/components/home/SearchBar";
 import { toast } from "sonner";
+import useAuth from "@/hooks/useAuth";
 
   
 export default function HomePage() {
+    const { auth } = useAuth()
+    console.log(auth.user_email)
+
     const [feeds, setFeeds] = useState<FeedData[]>([])
 
     // Pagination-related states
@@ -113,6 +117,7 @@ export default function HomePage() {
             />
             <FeedsTable 
               feeds={feeds} 
+              user_email={auth.user_email!}
               onDelete={handleDeleteFeed}
               onDuplicate={handleDuplicateFeed}
             />

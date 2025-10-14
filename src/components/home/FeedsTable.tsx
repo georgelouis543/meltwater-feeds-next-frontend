@@ -11,6 +11,7 @@ import { FeedData } from "@/types/feedData"
   
 type Props = {
   feeds: FeedData[],
+  user_email: string,
   onDelete: (
     feedId: string
   ) => void,
@@ -21,6 +22,7 @@ type Props = {
   
 export default function FeedsTable({ 
     feeds,
+    user_email,
     onDelete,
     onDuplicate
  }:Props) {
@@ -47,6 +49,7 @@ export default function FeedsTable({
             <FeedRow 
               key={feed._id} 
               feed={feed}
+              user_email={user_email}
               onDelete={onDelete}
               onDuplicate={onDuplicate} 
             />
