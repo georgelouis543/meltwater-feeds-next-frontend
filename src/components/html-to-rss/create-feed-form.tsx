@@ -46,7 +46,7 @@ export const formSchema = z.object({
   image_url_pre_literal: z.string().optional(),
   image_url_xpath: z.string().optional(),
   image_url_post_literal: z.string().optional(),
-  default_image_url: z.string().url().optional(),
+  default_image_url: z.string().optional(),
 });
 
 const defaultValues = {
@@ -108,7 +108,11 @@ export default function CreateFeedForm({
               name="url"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-xs">URL</FormLabel>
+                  <FormLabel 
+                    className="text-xs"
+                  >
+                    URL <span className="text-red-600">*</span>
+                  </FormLabel>
                   <FormControl>
                     <Input 
                       placeholder="Enter the Website's URL" 
@@ -146,7 +150,11 @@ export default function CreateFeedForm({
               name="item_xpath"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-xs">Item Xpath</FormLabel>
+                  <FormLabel 
+                    className="text-xs"
+                  >
+                    Item Xpath <span className="text-red-600">*</span>
+                  </FormLabel>
                   <FormControl>
                     <Input
                       placeholder="Enter the Item's XPATH" 
@@ -163,7 +171,11 @@ export default function CreateFeedForm({
               name="title_xpath"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-xs">Title Xpath</FormLabel>
+                  <FormLabel 
+                    className="text-xs"
+                  >
+                    Title Xpath <span className="text-red-600">*</span>
+                  </FormLabel>
                   <FormControl>
                     <Input 
                       placeholder="Enter the Title's relative XPATH" 
@@ -180,7 +192,11 @@ export default function CreateFeedForm({
               name="description_xpath"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-xs">Description Xpath</FormLabel>
+                  <FormLabel 
+                    className="text-xs"
+                  >
+                    Description Xpath <span className="text-red-600">*</span>
+                  </FormLabel>
                   <FormControl>
                     <Input 
                       placeholder="Enter the description's relative XPATH" 
@@ -198,7 +214,11 @@ export default function CreateFeedForm({
                 name="date_xpath"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs">Date Xpath</FormLabel>
+                    <FormLabel 
+                      className="text-xs"
+                    >
+                      Date Xpath <span className="text-red-600">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input 
                         placeholder="Enter the date's relative XPATH" 
@@ -240,7 +260,11 @@ export default function CreateFeedForm({
                 name="item_url_xpath"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs">Item URL Xpath</FormLabel>
+                    <FormLabel 
+                      className="text-xs"
+                    >
+                      Item URL Xpath <span className="text-red-600">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input 
                         placeholder="Enter the item URL's relative XPATH" 
@@ -257,7 +281,11 @@ export default function CreateFeedForm({
                 name="item_url_pre_literal"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs">Item URL Pre-literal</FormLabel>
+                    <FormLabel 
+                      className="text-xs"
+                    >
+                      Item URL Pre-literal
+                    </FormLabel>
                     <FormControl>
                       <Input 
                         placeholder="Enter the item URL's pre-literal" 
@@ -295,7 +323,11 @@ export default function CreateFeedForm({
                 name="source_name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs">Source Name</FormLabel>
+                    <FormLabel 
+                      className="text-xs"
+                    >
+                      Source Name <span className="text-red-600">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input 
                         placeholder="Enter the Source Name" 
@@ -312,7 +344,11 @@ export default function CreateFeedForm({
                 name="source_url"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs">Source URL</FormLabel>
+                    <FormLabel 
+                      className="text-xs"
+                    >
+                      Source URL <span className="text-red-600">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input 
                         placeholder="Enter the Source URL" 

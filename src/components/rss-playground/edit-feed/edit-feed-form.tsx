@@ -49,7 +49,7 @@ export const formSchema = z.object({
   image_url_pre_literal: z.string().optional(),
   image_url_xpath: z.string().optional(),
   image_url_post_literal: z.string().optional(),
-  default_image_url: z.string().url().optional(),
+  default_image_url: z.string().optional(),
 });
 
 const fallbackDefaultValues = {
@@ -122,7 +122,11 @@ export default function EditFeedForm({
               name="url"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-xs">URL</FormLabel>
+                  <FormLabel 
+                    className="text-xs"
+                  >
+                    URL <span className="text-red-600">*</span>
+                  </FormLabel>
                   <FormControl>
                     <Input 
                       placeholder="Enter the Feed URL" 
@@ -160,7 +164,11 @@ export default function EditFeedForm({
               name="item_xpath"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-xs">Item Xpath</FormLabel>
+                  <FormLabel 
+                    className="text-xs"
+                  >
+                    Item Xpath <span className="text-red-600">*</span>
+                  </FormLabel>
                   <FormControl>
                     <Input
                       placeholder="Enter the Item's XPATH" 
@@ -177,7 +185,11 @@ export default function EditFeedForm({
               name="title_xpath"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-xs">Title Xpath</FormLabel>
+                  <FormLabel 
+                    className="text-xs"
+                  >
+                    Title Xpath <span className="text-red-600">*</span>
+                  </FormLabel>
                   <FormControl>
                     <Input 
                       placeholder="Enter the Title's relative XPATH" 
@@ -194,7 +206,11 @@ export default function EditFeedForm({
               name="description_xpath"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-xs">Description Xpath</FormLabel>
+                  <FormLabel 
+                    className="text-xs"
+                  >
+                    Description Xpath <span className="text-red-600">*</span>
+                  </FormLabel>
                   <FormControl>
                     <Input 
                       placeholder="Enter the description's relative XPATH" 
@@ -211,7 +227,11 @@ export default function EditFeedForm({
               name="item_url_xpath"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-xs">Item URL Xpath</FormLabel>
+                  <FormLabel 
+                    className="text-xs"
+                  >
+                    Item URL Xpath <span className="text-red-600">*</span>
+                  </FormLabel>
                   <FormControl>
                     <Input 
                       placeholder="Enter the item URL's relative XPATH" 
@@ -229,7 +249,11 @@ export default function EditFeedForm({
                 name="date_xpath"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs">Date Xpath</FormLabel>
+                    <FormLabel 
+                      className="text-xs"
+                    >
+                      Date Xpath <span className="text-red-600">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input 
                         placeholder="Enter the date's relative XPATH" 
@@ -269,7 +293,11 @@ export default function EditFeedForm({
                 name="source_name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs">Source Name</FormLabel>
+                    <FormLabel 
+                      className="text-xs"
+                    >
+                      Source Name <span className="text-red-600">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input 
                         placeholder="Enter the Source Name" 
@@ -286,7 +314,11 @@ export default function EditFeedForm({
                 name="source_url"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs">Source URL</FormLabel>
+                    <FormLabel 
+                      className="text-xs"
+                    >
+                      Source URL <span className="text-red-600">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input 
                         placeholder="Enter the Source URL" 
