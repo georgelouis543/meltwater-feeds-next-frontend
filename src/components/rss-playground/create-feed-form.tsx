@@ -15,13 +15,23 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { Checkbox } from "../ui/checkbox"
 import Collapse from "./collapse-fields"
+import { 
+  Select, 
+  SelectContent, 
+  SelectItem, 
+  SelectTrigger, 
+  SelectValue 
+} from "../ui/select"
 
 export const formSchema = z.object({
   url: z.string().url({ 
     message: "Please enter a valid URL" 
   }),
   is_newsfeed: z.boolean(),
-  feed_type: z.enum(["rss_to_mwfeed"]),
+  feed_type: z.enum([
+    "rss_to_mwfeed", 
+    "rss_to_sharepoint"
+  ]),
   item_xpath: z.string().min(5, { 
     message: "Item XPath is required" 
   }),
@@ -144,6 +154,33 @@ export default function CreateFeedForm({
                   </FormLabel>
                   <FormControl>
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="feed_type"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-xs">
+                    Feed Type <span className="text-red-600">*</span>
+                  </FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger className="text-xs">
+                        <SelectValue placeholder="Select Feed Type" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="rss_to_mwfeed">RSS to MWFeed</SelectItem>
+                      <SelectItem value="rss_to_sharepoint">RSS to SharePoint</SelectItem>
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
