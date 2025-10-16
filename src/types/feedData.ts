@@ -24,5 +24,5 @@ export interface FeedData {
     updated_by: string
     created_at: string 
     updated_at: string
-    legacy_fields?: {}
+    legacy_fields?: Record<string, unknown>
 }
