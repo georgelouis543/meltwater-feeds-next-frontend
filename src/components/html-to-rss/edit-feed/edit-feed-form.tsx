@@ -242,6 +242,27 @@ export default function EditFeedForm({
 
               <FormField
                 control={form.control}
+                name="date_regex"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel 
+                      className="text-xs"
+                    >
+                      Date Format <span className="text-red-600">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <Input 
+                        placeholder="Enter the date Format's Regex" 
+                        {...field} 
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
                 name="use_index_date"
                 render={({ field }) => (
                   <FormItem 

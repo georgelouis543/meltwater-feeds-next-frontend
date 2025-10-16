@@ -238,7 +238,7 @@ export default function CreateFeedForm({
                     <FormLabel 
                       className="text-xs"
                     >
-                      Date Xpath <span className="text-red-600">*</span>
+                      Date Format <span className="text-red-600">*</span>
                     </FormLabel>
                     <FormControl>
                       <Input 
