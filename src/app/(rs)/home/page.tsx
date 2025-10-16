@@ -79,7 +79,7 @@ export default function HomePage() {
 
     // handling Delete 
     const handleDeleteFeed = async (
-      feedId: string
+      feedId: string | number
       ) => {
         try {
           await axiosPrivate
@@ -94,7 +94,7 @@ export default function HomePage() {
 
       // handling Duplicate 
       const handleDuplicateFeed = async (
-        feedId: string
+        feedId: string | number
         ) => {
           try {
             const res = await axiosPrivate
