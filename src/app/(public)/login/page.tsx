@@ -109,14 +109,15 @@ export default function LoginPage() {
     return (
         <div className="flex flex-col text-center">
             <div className="flex justify-center items-center w-full">
-                <Card className="w-full max-w-[900px] min-w-[450px] border-0 rounded-sm sm:border-2 border-black mt-20 bg-gradient-to-r from-red-500 to-orange-500">
+                {/* <Card className="w-full max-w-[900px] min-w-[450px] border-0 rounded-sm sm:border-2 border-black mt-20 bg-gradient-to-r from-red-500 to-orange-500"> */}
+                <Card className="w-full max-w-[900px] min-w-[450px] border-0 rounded-sm sm:border-2 border-black mt-20 bg-white">
                     
                     <div className="flex flex-col md:flex-row w-full">
                         
                         {/* Image goes left */}
                         <div className="w-full md:w-[500px] flex items-center justify-center md:border-r-4 md:border-black">
                             <Image 
-                                src="/images/mwfeeds-logo-login.svg" 
+                                src="/images/mwfeeds-legacy-logo.png" 
                                 alt="Login" 
                                 width='500'
                                 height='200'

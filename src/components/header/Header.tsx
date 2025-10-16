@@ -61,7 +61,7 @@ export function Header() {
                         href='/home'
                     >
                         <Image
-                            src="/images/mwfeeds-logo-login.svg"
+                            src="/images/mwfeeds-legacy-logo.png"
                             alt='logo'
                             width='70'
                             height='45'
@@ -200,7 +200,7 @@ export function Header() {
                                     href='/home'
                                 >
                                     <Image
-                                        src="/images/mwfeeds-logo-login.svg"
+                                        src="/images/mwfeeds-legacy-logo.png"
                                         alt="mwfeeds logo"
                                         width='90'
                                         height='90'
