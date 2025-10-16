@@ -252,7 +252,7 @@ export default function EditFeedForm({
                     </FormLabel>
                     <FormControl>
                       <Input 
-                        placeholder="Enter the date Format's Regex" 
+                        placeholder="Enter the date Format" 
                         {...field} 
                       />
                     </FormControl>
