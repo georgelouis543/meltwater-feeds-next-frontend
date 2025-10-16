@@ -13,8 +13,8 @@ import { useRouter } from "next/navigation";
 type Props = {
     feed: FeedData,
     user_email: string,
-    onDelete: (id: string) => void
-    onDuplicate: (id: string) => void
+    onDelete: (id: string | number) => void
+    onDuplicate: (id: string | number) => void
 }
 
 export default function FeedRow({ 
@@ -26,6 +26,8 @@ export default function FeedRow({
     const router = useRouter();
 
     function handleEditClick() {
+        if (feed.feed_type === "legacy_feed") return;
+
         if (feed.feed_type === "html_to_rss") {
           router.push(`/html-to-rss/edit-feed/${feed._id}`);
         } else {
@@ -80,18 +82,25 @@ export default function FeedRow({
                 "
             >
                 <Pen 
-                    className="w-4 h-4 cursor-pointer" 
+                    className={`w-4 h-4 ${
+                        feed.feed_type === "legacy_feed"
+                          ? "text-gray-400 cursor-not-allowed"
+                          : "cursor-pointer"
+                    }`}
                     onClick={handleEditClick}
                 />
                 <DuplicateFeedDialog
                     feedId={feed._id}
                     onConfirmDuplicate={onDuplicate}
+                    disabled={
+                        feed.feed_type === "legacy_feed"
+                    }
                 />
                 <DeleteFeedDialog
                     feedId={feed._id}
                     onConfirmDelete={onDelete}
                     disabled={
-                        feed.created_by !== user_email
+                        feed.created_by !== user_email || feed.feed_type === "legacy_feed"
                     }
                 />
             </TableCell>

@@ -1,5 +1,5 @@
 export interface FeedData {
-    _id: string
+    _id: string | number
     url: string
     is_javascript_enabled: boolean
     feed_type: string
@@ -24,4 +24,5 @@ export interface FeedData {
     updated_by: string
     created_at: string 
     updated_at: string
+    legacy_fields?: {}
 }

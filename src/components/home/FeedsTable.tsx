@@ -13,10 +13,10 @@ type Props = {
   feeds: FeedData[],
   user_email: string,
   onDelete: (
-    feedId: string
+    feedId: string | number
   ) => void,
   onDuplicate: (
-    feedId: string
+    feedId: string | number
   ) => void
 }
   

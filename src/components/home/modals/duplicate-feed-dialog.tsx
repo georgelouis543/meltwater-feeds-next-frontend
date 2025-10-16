@@ -14,24 +14,31 @@ import { Button } from "@/components/ui/button"
 import { CopyPlus } from "lucide-react"
 
 type Props = {
-  feedId: string
-  onConfirmDuplicate: (id: string) => void
+  feedId: string | number
+  onConfirmDuplicate: (id: string | number) => void
+  disabled?: boolean
 }
 
 export default function DuplicateeFeedDialog(
     { 
         feedId, 
-        onConfirmDuplicate
+        onConfirmDuplicate,
+        disabled = false
     }: Props) {
   return (
     <Dialog>
       <DialogTrigger asChild>
         <CopyPlus 
-            className="w-4 h-4 cursor-pointer" 
+            className={`w-4 h-4 transition 
+            ${disabled 
+              ? "opacity-40 cursor-not-allowed pointer-events-none" 
+              : "cursor-pointer hover:text-red-600"}`
+            } 
         />
       </DialogTrigger>
 
-      <DialogContent>
+      {!disabled && (
+        <DialogContent>
         <DialogHeader>
           <DialogTitle>Duplicate Feed</DialogTitle>
           <DialogDescription>
@@ -59,6 +66,8 @@ export default function DuplicateeFeedDialog(
           </DialogClose>
         </DialogFooter>
       </DialogContent>
+      )}
+      
     </Dialog>
   )
 }
