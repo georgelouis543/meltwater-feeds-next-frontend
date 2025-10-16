@@ -37,8 +37,8 @@ export default function FeedsTable({
             <TableHead>Feed ID</TableHead>
             <TableHead>Type</TableHead>
             <TableHead>Created by</TableHead>
-            <TableHead>Modified date (+0000)</TableHead>
-            <TableHead>Created date (+0000)</TableHead>
+            <TableHead>Modified date (UTC)</TableHead>
+            <TableHead>Created date (UTC)</TableHead>
             <TableHead className="text-right">
                 Action
             </TableHead>

@@ -31,8 +31,8 @@ export default function UsersTable({
             <TableHead>User Email</TableHead>
             <TableHead>Username</TableHead>
             <TableHead>Role</TableHead>
-            <TableHead>Modified date (+0000)</TableHead>
-            <TableHead>Created date (+0000)</TableHead>
+            <TableHead>Modified date (UTC)</TableHead>
+            <TableHead>Created date (UTC)</TableHead>
             <TableHead className="text-right">
                 Action
             </TableHead>
