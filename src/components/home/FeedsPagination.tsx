@@ -19,8 +19,8 @@ export default function FeedsPagination({
       nextLabel={"→"}
       breakLabel={"..."}
       pageCount={pageCount}
-      marginPagesDisplayed={2}
-      pageRangeDisplayed={5}
+      marginPagesDisplayed={1}
+      pageRangeDisplayed={1}
       onPageChange={
         ({ selected }) => onPageChange(selected)
       }

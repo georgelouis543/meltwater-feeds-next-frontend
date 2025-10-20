@@ -13,20 +13,26 @@ import { useRouter } from "next/navigation";
 type Props = {
     feed: FeedData,
     user_email: string,
-    onDelete: (id: string | number) => void
-    onDuplicate: (id: string | number) => void
+    onDelete: (id: string | number) => void,
+    onDuplicate: (id: string | number) => void,
+    onSelectFeed: (id: string | number, checked: boolean) => void,
+    selected: boolean
 }
 
 export default function FeedRow({ 
     feed,
     user_email,
     onDelete,
-    onDuplicate 
+    onDuplicate,
+    onSelectFeed,
+    selected 
 }: Props) {
     const router = useRouter();
 
     function handleEditClick() {
-        if (feed.feed_type === "legacy_feed") return;
+        if (feed.feed_type === "legacy_feed" || feed.feed_type === "merged_feed") {
+            return;
+        }
 
         if (feed.feed_type === "html_to_rss") {
           router.push(`/html-to-rss/edit-feed/${feed._id}`);
@@ -59,7 +65,13 @@ export default function FeedRow({
             <TableCell>
                 <Checkbox
                     className="border border-black" 
-                    disabled 
+                    checked={selected}
+                    onCheckedChange={(checked) => 
+                        onSelectFeed(feed._id, Boolean(checked))
+                    }
+                    disabled={
+                        feed.feed_type === "legacy_feed" || feed.feed_type === "merged_feed"
+                    }
                 />
             </TableCell>
             <TableCell>{feed._id}</TableCell>
@@ -83,7 +95,7 @@ export default function FeedRow({
             >
                 <Pen 
                     className={`w-4 h-4 ${
-                        feed.feed_type === "legacy_feed"
+                        feed.feed_type === "legacy_feed" || feed.feed_type === "merged_feed"
                           ? "text-gray-400 cursor-not-allowed"
                           : "cursor-pointer"
                     }`}
@@ -100,7 +112,7 @@ export default function FeedRow({
                     feedId={feed._id}
                     onConfirmDelete={onDelete}
                     disabled={
-                        feed.created_by !== user_email || feed.feed_type === "legacy_feed"
+                        feed.created_by !== user_email || feed.feed_type === "legacy_feed" 
                     }
                 />
             </TableCell>

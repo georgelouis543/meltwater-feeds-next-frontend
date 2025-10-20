@@ -12,6 +12,7 @@ import FeedsPagination from "@/components/home/FeedsPagination";
 import SearchBar from "@/components/home/SearchBar";
 import { toast } from "sonner";
 import useAuth from "@/hooks/useAuth";
+import MergeFeedsDialog from "@/components/home/modals/merge-feeds-dialog";
 
   
 export default function HomePage() {
@@ -27,6 +28,12 @@ export default function HomePage() {
     // Search-bar related states
     const [filterParam, setFilterParam] = useState("")
     const [searchValue, setSearchValue] = useState("")
+
+    // Merge related states
+    const [
+      selectedFeedIds, 
+      setSelectedFeedIds
+    ] = useState<(string | number)[]>([]);
 
     const [isLoading, setIsLoading] = useState(true)
 
@@ -77,6 +84,44 @@ export default function HomePage() {
       setSearchValue(data.search_value)
     }
 
+    // handling selected inputs
+    function handleSelectFeed(
+      feedId: string | number, 
+      checked: boolean
+      ) {
+      setSelectedFeedIds(prev => {
+        if (checked) return [...prev, feedId];
+        return prev.filter(id => id !== feedId);
+      });
+    }
+
+    // Tracking changes to the selectedIds array
+    useEffect(() => {
+      console.log("Selected feed IDs:", selectedFeedIds);
+    }, [selectedFeedIds]);
+
+    // handling merge
+    async function handleMergeFeeds() {
+      console.log("Merging feeds:", selectedFeedIds);
+      try {
+        const res = await axiosPrivate.post(
+          "/feed-collection-handler/merge-feeds",
+          {
+            feed_ids: selectedFeedIds,
+            feed_type: "merged_feed"
+          }
+        );
+    
+        console.log(res.data)
+        toast.success(res.data.message);
+        setSelectedFeedIds([]);
+        fetchFeeds();
+      } catch (err) {
+        console.error("Error merging feeds", err);
+        toast.error("Error merging feeds! Check console for more info.");
+      }
+    }
+
     // handling Delete 
     const handleDeleteFeed = async (
       feedId: string | number
@@ -112,14 +157,27 @@ export default function HomePage() {
       isLoading ? <p>Loading...</p>
       :
         (<>
-            <SearchBar 
-              onSearch={handleSearch} 
-            />
+            <div 
+              className="flex flex-col sm:flex-row sm:items-center sm:justify-between"
+            >
+              <SearchBar 
+                onSearch={handleSearch} 
+              />
+              <div className="border border-black p-2 shadow-md hover:bg-gray-700 bg-black transition-colors cursor-pointer mt-2 sm:mt-0 sm:ml-4 self-start sm:self-auto">
+                <MergeFeedsDialog 
+                  onConfirmMerge={handleMergeFeeds}
+                  disabled={selectedFeedIds.length < 2}
+                />
+              </div>
+            </div>
+            
             <FeedsTable 
               feeds={feeds} 
               user_email={auth.user_email!}
               onDelete={handleDeleteFeed}
               onDuplicate={handleDuplicateFeed}
+              onSelectFeed={handleSelectFeed}
+              selectedFeedIds={selectedFeedIds}
             />
             <FeedsPagination 
               pageCount={totalPages} 

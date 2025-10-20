@@ -17,14 +17,23 @@ type Props = {
   ) => void,
   onDuplicate: (
     feedId: string | number
-  ) => void
+  ) => void,
+  onSelectFeed: (
+    id: string | number, 
+    checked: boolean
+  ) => void,
+  selectedFeedIds: (
+    string | number
+  )[]
 }
   
 export default function FeedsTable({ 
     feeds,
     user_email,
     onDelete,
-    onDuplicate
+    onDuplicate,
+    onSelectFeed,
+    selectedFeedIds
  }:Props) {
     return (
       <Table className="shadow-md mt-4">
@@ -52,6 +61,10 @@ export default function FeedsTable({
               user_email={user_email}
               onDelete={onDelete}
               onDuplicate={onDuplicate} 
+              onSelectFeed={onSelectFeed}
+              selected={
+                selectedFeedIds.includes(feed._id)
+              }
             />
           ))}
         </TableBody>
